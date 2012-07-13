@@ -145,6 +145,11 @@
     cell.timeLabel.text = tweet.created_at;
     cell.textLabel.text = tweet.text;
     
+    // 4 - load profile image
+    [cell.imageView setImageWithURL:[NSURL URLWithString:tweet.profile_image_url] placeholderImage:[UIImage imageNamed:@"twitteranon0.png"]];
+    cell.imageView.layer.cornerRadius = 5.0;
+    cell.imageView.layer.masksToBounds = YES;
+    
     return cell;
 }
 

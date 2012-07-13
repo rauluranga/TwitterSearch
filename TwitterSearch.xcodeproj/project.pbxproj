@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		A827988FF6C7484E8D1F188F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB44BCEC743748DF827E1CFC /* libPods.a */; };
 		C483257D15B090AA0041951D /* TweetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C483257C15B090AA0041951D /* TweetCell.m */; };
+		C483259C15B0C95B0041951D /* twitteranon0.png in Resources */ = {isa = PBXBuildFile; fileRef = C483259B15B0C95B0041951D /* twitteranon0.png */; };
 		C4CEC3C315AFAFB600D62C28 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4CEC3C215AFAFB600D62C28 /* UIKit.framework */; };
 		C4CEC3C515AFAFB600D62C28 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4CEC3C415AFAFB600D62C28 /* Foundation.framework */; };
 		C4CEC3C715AFAFB600D62C28 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4CEC3C615AFAFB600D62C28 /* CoreGraphics.framework */; };
@@ -24,6 +25,7 @@
 		32FCF8014DA64507956AA806 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		C483257B15B090AA0041951D /* TweetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetCell.h; sourceTree = "<group>"; };
 		C483257C15B090AA0041951D /* TweetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetCell.m; sourceTree = "<group>"; };
+		C483259B15B0C95B0041951D /* twitteranon0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = twitteranon0.png; sourceTree = "<group>"; };
 		C4CEC3BE15AFAFB600D62C28 /* TwitterSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwitterSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4CEC3C215AFAFB600D62C28 /* UIKit.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C4CEC3C415AFAFB600D62C28 /* Foundation.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -89,6 +91,7 @@
 		C4CEC3C815AFAFB600D62C28 /* TwitterSearch */ = {
 			isa = PBXGroup;
 			children = (
+				C483259B15B0C95B0041951D /* twitteranon0.png */,
 				C4CEC3D115AFAFB600D62C28 /* AppDelegate.h */,
 				C4CEC3D215AFAFB600D62C28 /* AppDelegate.m */,
 				C4CEC3D415AFAFB600D62C28 /* MainStoryboard.storyboard */,
@@ -168,6 +171,7 @@
 			files = (
 				C4CEC3CD15AFAFB600D62C28 /* InfoPlist.strings in Resources */,
 				C4CEC3D615AFAFB600D62C28 /* MainStoryboard.storyboard in Resources */,
+				C483259C15B0C95B0041951D /* twitteranon0.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

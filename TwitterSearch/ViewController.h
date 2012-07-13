@@ -10,6 +10,8 @@
 #import <RestKit/RestKit.h>
 #import "Tweet.h"
 #import "TweetCell.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+#import <QuartzCore/QuartzCore.h>
 
 @interface ViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, RKObjectLoaderDelegate>  {
     __weak IBOutlet UISearchBar *_searchBar;
