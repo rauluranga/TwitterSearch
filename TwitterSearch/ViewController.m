@@ -70,7 +70,12 @@
     
     // 3 - map Tweet class with the JSON response
     RKObjectMapping *tweetMapping = [RKObjectMapping mappingForClass:[Tweet class]];
-    [tweetMapping mapKeyPathsToAttributes:@"from_user",@"from_user",nil];
+    [tweetMapping mapKeyPathsToAttributes:@"created_at",@"created_at",
+                                         @"from_user",@"from_user",
+                                         @"from_user_name",@"from_user_name",
+                                         @"profile_image_url",@"profile_image_url",
+                                         @"text",@"text",
+                                         @"id_str",@"id_str",nil];
     [objectManager.mappingProvider setMapping:tweetMapping forKeyPath:@"results"];
     
     // 4 - send search request!
@@ -124,18 +129,21 @@
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     // 1 - set up cell id
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"TweetCell";
     
     // 2 - setup custom cell
-    UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    TweetCell *cell = (TweetCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        cell = [[TweetCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     
     // 3 - start filling all labels!
     Tweet *tweet = [tweets objectAtIndex:indexPath.row];
     
-    cell.textLabel.text = [NSString stringWithFormat:@"@%@", tweet.from_user];
+    cell.usernameLabel.text = tweet.from_user;
+    cell.userLabel.text = [NSString stringWithFormat:@"@%@", tweet.from_user];
+    cell.timeLabel.text = tweet.created_at;
+    cell.textLabel.text = tweet.text;
     
     return cell;
 }

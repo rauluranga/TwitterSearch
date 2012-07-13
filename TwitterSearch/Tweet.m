@@ -11,5 +11,10 @@
 @implementation Tweet
 
 @synthesize from_user;
+@synthesize created_at;
+@synthesize from_user_name;
+@synthesize profile_image_url;
+@synthesize text;
+@synthesize id_str;
 
 @end

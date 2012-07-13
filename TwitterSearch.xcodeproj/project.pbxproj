@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A827988FF6C7484E8D1F188F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB44BCEC743748DF827E1CFC /* libPods.a */; };
+		C483257D15B090AA0041951D /* TweetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C483257C15B090AA0041951D /* TweetCell.m */; };
 		C4CEC3C315AFAFB600D62C28 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4CEC3C215AFAFB600D62C28 /* UIKit.framework */; };
 		C4CEC3C515AFAFB600D62C28 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4CEC3C415AFAFB600D62C28 /* Foundation.framework */; };
 		C4CEC3C715AFAFB600D62C28 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4CEC3C615AFAFB600D62C28 /* CoreGraphics.framework */; };
@@ -21,6 +22,8 @@
 
 /* Begin PBXFileReference section */
 		32FCF8014DA64507956AA806 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		C483257B15B090AA0041951D /* TweetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetCell.h; sourceTree = "<group>"; };
+		C483257C15B090AA0041951D /* TweetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetCell.m; sourceTree = "<group>"; };
 		C4CEC3BE15AFAFB600D62C28 /* TwitterSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwitterSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4CEC3C215AFAFB600D62C28 /* UIKit.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C4CEC3C415AFAFB600D62C28 /* Foundation.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -94,6 +97,8 @@
 				C4CEC3F515AFB8DB00D62C28 /* Tweet.h */,
 				C4CEC3F615AFB8DB00D62C28 /* Tweet.m */,
 				C4CEC3C915AFAFB600D62C28 /* Supporting Files */,
+				C483257B15B090AA0041951D /* TweetCell.h */,
+				C483257C15B090AA0041951D /* TweetCell.m */,
 			);
 			path = TwitterSearch;
 			sourceTree = "<group>";
@@ -194,6 +199,7 @@
 				C4CEC3D315AFAFB600D62C28 /* AppDelegate.m in Sources */,
 				C4CEC3D915AFAFB600D62C28 /* ViewController.m in Sources */,
 				C4CEC3F715AFB8DB00D62C28 /* Tweet.m in Sources */,
+				C483257D15B090AA0041951D /* TweetCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

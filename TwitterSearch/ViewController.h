@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <RestKit/RestKit.h>
 #import "Tweet.h"
+#import "TweetCell.h"
 
 @interface ViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, RKObjectLoaderDelegate>  {
     __weak IBOutlet UISearchBar *_searchBar;
