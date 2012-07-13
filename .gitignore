@@ -28,3 +28,4 @@ xcuserdata
 # osx noise
 .DS_Store
 profile
+Podfile.lock

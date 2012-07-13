@@ -11,6 +11,7 @@
 @implementation ViewController
 @synthesize tableView = _tableView;
 @synthesize searchBar = _searchBar;
+@synthesize tweets;
 
 - (void)didReceiveMemoryWarning
 {
@@ -34,6 +35,24 @@
 
 #pragma mark - View lifecycle
 
+- (void)searchRequest {
+    
+    // 1 - set up search params!
+    NSString *q = @"iOS 5";
+    NSString *rpp=@"5";
+    NSString *with_twitter_user_id = @"true";
+    NSString *result_type = @"recent";
+    // 2 - map params in to a NSDictionary
+    NSDictionary *queryParams;
+    queryParams = [NSDictionary dictionaryWithObjectsAndKeys:q, @"q", rpp, @"rpp", with_twitter_user_id, @"with_twitter_user_id", result_type, @"result_type", nil];
+    // 3 - send request
+    RKObjectManager *objectManager = [RKObjectManager sharedManager];
+    RKURL *URL = [RKURL URLWithBaseURL:[objectManager baseURL] resourcePath:@"/search.json" queryParameters:queryParams];
+    [objectManager loadObjectsAtResourcePath:[NSString stringWithFormat:@"%@?%@", [URL resourcePath], [URL query]] delegate:self];
+    
+    NSLog(@"resource path: %@", [NSString stringWithFormat:@"%@?%@", [URL resourcePath], [URL query]]);
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -41,8 +60,21 @@
     // 1 - start listen UIKeyboard!
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardShown:) name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardHiiden:) name:UIKeyboardWillHideNotification object:nil];
-
-	// Do any additional setup after loading the view, typically from a nib.
+    
+    tweets = [[NSMutableArray alloc] init];
+    
+    // 2 - set up the base URL
+    RKURL *baseURL = [RKURL URLWithBaseURLString:@"http://search.twitter.com/"];
+    RKObjectManager *objectManager = [RKObjectManager objectManagerWithBaseURL:baseURL];
+    objectManager.client.baseURL = baseURL;
+    
+    // 3 - map Tweet class with the JSON response
+    RKObjectMapping *tweetMapping = [RKObjectMapping mappingForClass:[Tweet class]];
+    [tweetMapping mapKeyPathsToAttributes:@"from_user",@"from_user",nil];
+    [objectManager.mappingProvider setMapping:tweetMapping forKeyPath:@"results"];
+    
+    // 4 - send search request!
+    [self searchRequest];
 }
 
 - (void)viewDidUnload
@@ -83,10 +115,10 @@
 }
 
 #pragma mark -
-#pragma mark UITableViewDelegate, UITableViewDataSource protocols implementatios
+#pragma mark UITableViewDelegate, UITableViewDataSource protocols implementations
 
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 15;
+    return [tweets count];
 }
 
 -(UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -100,7 +132,10 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     
-    cell.textLabel.text = @"Detail";
+    // 3 - start filling all labels!
+    Tweet *tweet = [tweets objectAtIndex:indexPath.row];
+    
+    cell.textLabel.text = [NSString stringWithFormat:@"@%@", tweet.from_user];
     
     return cell;
 }
@@ -127,5 +162,29 @@
 }
 
 
+#pragma mark -
+#pragma mark RKObjectLoaderDelegate implementation
+
+- (void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error {
+    NSLog(@"Error: %@", [error localizedDescription]);
+    // 1 - display error message
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Error retrieving Tweets" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
+    [alert show];
+    
+}
+
+- (void)request:(RKRequest*)request didLoadResponse:(RKResponse*)response {
+    NSLog(@"response code: %d", [response statusCode]);
+}
+
+- (void)objectLoader:(RKObjectLoader *)objectLoader didLoadObjects:(NSArray *)objects {
+    
+    NSLog(@"objects[%d]", [objects count]);
+    [tweets removeAllObjects];
+    for (Tweet *t in objects) {
+        [tweets addObject:t];
+    }
+    [self.tableView reloadData];
+}
 
 @end
