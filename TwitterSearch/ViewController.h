@@ -12,6 +12,7 @@
 #import "TweetCell.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <QuartzCore/QuartzCore.h>
+#import "TTTTimeIntervalFormatter.h"
 
 @interface ViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, RKObjectLoaderDelegate>  {
     __weak IBOutlet UISearchBar *_searchBar;

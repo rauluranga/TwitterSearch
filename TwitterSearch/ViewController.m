@@ -131,6 +131,15 @@
     // 1 - set up cell id
     static NSString *CellIdentifier = @"TweetCell";
     
+    // 1.1 - set up TTTTimeIntervalFormatter singleton
+    static TTTTimeIntervalFormatter *_timeIntervalFormatter = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _timeIntervalFormatter = [[TTTTimeIntervalFormatter alloc] init];
+        [_timeIntervalFormatter setUsesAbbreviatedCalendarUnits:YES];
+        [_timeIntervalFormatter setLocale:[NSLocale currentLocale]];
+    }); 
+    
     // 2 - setup custom cell
     TweetCell *cell = (TweetCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
@@ -142,7 +151,14 @@
     
     cell.usernameLabel.text = tweet.from_user;
     cell.userLabel.text = [NSString stringWithFormat:@"@%@", tweet.from_user];
-    cell.timeLabel.text = tweet.created_at;
+    
+    // 3.1 - format date with TTTTimeIntervalFormatter
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];                                                         
+    [df setDateFormat:@"eee, dd MMM yyyy HH:mm:ss ZZZZ"]; //Tue, 10 Jul 2012 15:50:04 +0000
+    NSDate *date = [df dateFromString:tweet.created_at];
+    NSDate *now = [[NSDate alloc] init];
+    cell.timeLabel.text = [_timeIntervalFormatter stringForTimeIntervalFromDate:now toDate:date];
+    
     cell.textLabel.text = tweet.text;
     
     // 4 - load profile image
