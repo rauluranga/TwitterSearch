@@ -13,6 +13,7 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <QuartzCore/QuartzCore.h>
 #import "TTTTimeIntervalFormatter.h"
+#import "MBProgressHUD.h"
 
 @interface ViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, RKObjectLoaderDelegate>  {
     __weak IBOutlet UISearchBar *_searchBar;

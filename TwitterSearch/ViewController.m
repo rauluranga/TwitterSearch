@@ -51,6 +51,10 @@
     [objectManager loadObjectsAtResourcePath:[NSString stringWithFormat:@"%@?%@", [URL resourcePath], [URL query]] delegate:self];
     
     NSLog(@"resource path: %@", [NSString stringWithFormat:@"%@?%@", [URL resourcePath], [URL query]]);
+    
+    // 4 - display loading indicator
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.labelText = @"Loading";
 }
 
 - (void)viewDidLoad
@@ -200,6 +204,9 @@
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Error retrieving Tweets" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
     [alert show];
     
+    // 2 - hide loading indicator
+   [MBProgressHUD hideHUDForView:self.view animated:YES];
+    
 }
 
 - (void)request:(RKRequest*)request didLoadResponse:(RKResponse*)response {
@@ -214,6 +221,9 @@
         [tweets addObject:t];
     }
     [self.tableView reloadData];
+    
+    // 2 - hide loading indicator
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 
 @end
