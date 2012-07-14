@@ -11,6 +11,7 @@
 @implementation ViewController
 @synthesize tableView = _tableView;
 @synthesize searchBar = _searchBar;
+@synthesize pullToRefreshView = _pullToRefreshView;
 @synthesize tweets;
 
 - (void)didReceiveMemoryWarning
@@ -53,8 +54,12 @@
     NSLog(@"resource path: %@", [NSString stringWithFormat:@"%@?%@", [URL resourcePath], [URL query]]);
     
     // 4 - display loading indicator
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.labelText = @"Loading";
+    if (usingPullToRefresh) {
+        [self.pullToRefreshView startLoading];
+    } else {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.labelText = @"Loading";
+    }
 }
 
 - (void)viewDidLoad
@@ -81,6 +86,9 @@
                                          @"text",@"text",
                                          @"id_str",@"id_str",nil];
     [objectManager.mappingProvider setMapping:tweetMapping forKeyPath:@"results"];
+    
+    // 3.1 - set up  SSPullToRefreshView
+    self.pullToRefreshView = [[SSPullToRefreshView alloc] initWithScrollView:self.tableView delegate:self];
     
     // 4 - send search request!
     [self searchRequest];
@@ -192,6 +200,8 @@
  */
 -(void) searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     [self.searchBar resignFirstResponder];
+    
+    usingPullToRefresh = NO;
 }
 
 
@@ -205,7 +215,13 @@
     [alert show];
     
     // 2 - hide loading indicator
-   [MBProgressHUD hideHUDForView:self.view animated:YES];
+    if (usingPullToRefresh) {
+        [self.pullToRefreshView finishLoading];
+    } else {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+    }
+    
+    usingPullToRefresh = NO;
     
 }
 
@@ -223,7 +239,21 @@
     [self.tableView reloadData];
     
     // 2 - hide loading indicator
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    if (usingPullToRefresh) {
+        [self.pullToRefreshView finishLoading];
+    } else {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+    }
+    
+    usingPullToRefresh = NO;
+}
+
+#pragma mark -
+#pragma mark SSPullToRefreshViewDelegate implementation
+
+- (void)pullToRefreshViewDidStartLoading:(SSPullToRefreshView *)view {
+    usingPullToRefresh = YES;
+    [self searchRequest];
 }
 
 @end
