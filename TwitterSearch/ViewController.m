@@ -36,6 +36,11 @@
 
 #pragma mark - View lifecycle
 
+- (BOOL)isTweetAlreadyAdded:(Tweet *)tweet {
+    NSArray *duplicates = [tweets filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"id_str == %@", tweet.id_str]];
+    return [duplicates count] > 0 ? YES : NO;
+}
+
 - (void)searchRequest {
     
     // 1 - set up search params!
@@ -247,11 +252,21 @@
 - (void)objectLoader:(RKObjectLoader *)objectLoader didLoadObjects:(NSArray *)objects {
     
     NSLog(@"objects[%d]", [objects count]);
-    [tweets removeAllObjects];
-    for (Tweet *t in objects) {
-        [tweets addObject:t];
-    }
-    [self.tableView reloadData];
+    
+    // 1 - populate TableView
+    [self.tableView beginUpdates];  
+    NSArray* reversedArray = [[objects reverseObjectEnumerator] allObjects];            //revert fetched tweets!
+    NSMutableArray *insertion = [[NSMutableArray alloc] init];                          //this array will hold all NSIndexPaths objects
+    int insertIdx = 0;   
+    for (Tweet *t in reversedArray) {
+        if (![self isTweetAlreadyAdded:t]) {                                            //check is tweet is already added in array
+            [tweets insertObject:t atIndex:insertIdx];                                  //insert new tweet
+            [insertion addObject:[NSIndexPath indexPathForRow:insertIdx inSection:0]];  //insert NSIndexPath
+            insertIdx++;
+        }
+    }   
+    [self.tableView insertRowsAtIndexPaths:insertion withRowAnimation:UITableViewRowAnimationRight];
+    [self.tableView endUpdates];
     
     // 2 - hide loading indicator
     if (usingPullToRefresh) {
@@ -261,6 +276,7 @@
     }
     
     usingPullToRefresh = NO;
+    
 }
 
 #pragma mark -
