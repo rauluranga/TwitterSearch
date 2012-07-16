@@ -32,4 +32,14 @@
     // Configure the view for the selected state
 }
 
+- (void) layoutSubviews {   
+    [super layoutSubviews];
+    CGRect usernameRect = usernameLabel.frame;    
+    CGRect useRect = userLabel.frame;
+    useRect.origin.x = usernameRect.origin.x + usernameRect.size.width + 3;
+    userLabel.frame = useRect;
+    self.imageView.frame = CGRectMake( 10, 8, 48, 48 );
+}
+
+
 @end

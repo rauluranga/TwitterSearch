@@ -171,6 +171,7 @@
     Tweet *tweet = [tweets objectAtIndex:indexPath.row];
     
     cell.usernameLabel.text = tweet.from_user;
+    [cell.usernameLabel sizeToFit];
     cell.userLabel.text = [NSString stringWithFormat:@"@%@", tweet.from_user];
     
     // 3.1 - format date with TTTTimeIntervalFormatter
