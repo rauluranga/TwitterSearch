@@ -21,6 +21,7 @@
     __weak IBOutlet UITableView *_tableView;
      __weak SSPullToRefreshView *_pullToRefreshView;
     BOOL usingPullToRefresh;
+    NSString *searchQuery;
 }
 
 @property (strong, nonatomic) NSMutableArray *tweets;

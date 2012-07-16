@@ -39,7 +39,7 @@
 - (void)searchRequest {
     
     // 1 - set up search params!
-    NSString *q = @"iOS 5";
+    NSString *q = searchQuery;
     NSString *rpp=@"5";
     NSString *with_twitter_user_id = @"true";
     NSString *result_type = @"recent";
@@ -71,6 +71,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardHiiden:) name:UIKeyboardWillHideNotification object:nil];
     
     tweets = [[NSMutableArray alloc] init];
+    
+    // 1.1 - Initialize UISearchBar
+    [self.searchBar setText:@"iOS 5"];
+    searchQuery = [self.searchBar text];
     
     // 2 - set up the base URL
     RKURL *baseURL = [RKURL URLWithBaseURLString:@"http://search.twitter.com/"];
@@ -199,9 +203,20 @@
  *  start new search based on the UISearchBar textfield value
  */
 -(void) searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    
+    // 1 - hide keyboard
     [self.searchBar resignFirstResponder];
     
+    // 2 - save search textfield value
+    searchQuery = [self.searchBar text];
     usingPullToRefresh = NO;
+    
+    // 3 - this is a new search, remove all previous tweets!
+    [tweets removeAllObjects];
+    [self.tableView reloadData];
+    
+    // 4 - perform search
+    [self searchRequest];
 }
 
 
